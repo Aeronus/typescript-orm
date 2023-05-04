@@ -1,0 +1,57 @@
+{
+  "name": "typescript-orm",
+  "version": "1.0.0-alpha",
+  "description": "ORM functionality for typescript entities.",
+  "author": "Pascal",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "scripts": {
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "lint": "eslint  .",
+    "lint:fix": "npm run lint -- --fix",
+    "release": "standard-version --no-verify",
+    "test": "jest --config jestconfig.json",
+    "test:coverage": "nyc npm test",
+    "test:coverage:report": "nyc report --reporter=html",
+    "test:watch": "mocha --watch",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aeronus/typescript_orm"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.3",
+    "@commitlint/config-conventional": "^17.6.3",
+    "@testing-library/react": "^14.0.0",
+    "@types/jest": "^29.5.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "coveralls": "^3.1.1",
+    "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "jest": "^29.5.0",
+    "jest-canvas-mock": "^2.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "lint-staged": "^13.2.2",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "prettier": "^2.8.8",
+    "standard-version": "^9.5.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.4"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "license": "MIT"
+}
