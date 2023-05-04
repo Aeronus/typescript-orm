@@ -16,5 +16,6 @@
       "lines": 85,
       "statements": 85
     }
-  }
+  },
+  "collectCoverage": true
 }
