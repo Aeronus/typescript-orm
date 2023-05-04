@@ -31,5 +31,5 @@ jobs:
     - name: Jest coverage report
       uses: ArtiomTr/jest-coverage-report-action@v2.2.3
       with:
-        test-script: npm run test:coverage
+        test-script: npm run test:coverage:ci
     #- run: npm test
