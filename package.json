@@ -1,6 +1,6 @@
 {
-  "name": "typescript-orm",
-  "version": "1.0.0-alpha",
+  "name": "@aeronus/typescript-orm",
+  "version": "1.0.0",
   "description": "ORM functionality for typescript entities.",
   "author": "Pascal",
   "main": "./dist/cjs/index.js",
@@ -13,7 +13,9 @@
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint  .",
     "lint:fix": "npm run lint -- --fix",
-    "release": "standard-version --no-verify",
+    "release": "standard-version",
+    "release:alpha": "npm run release -- --prerelease alpha",
+    "release:beta": "npm run release -- --prerelease beta",
     "test": "jest --config jest.config.json",
     "test:coverage": "npm run test -- --coverage",
     "test:coverage:ci": "npm run test -- --ci --json --testLocationInResults --outputFile=report.json",
@@ -36,13 +38,10 @@
     "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "husky": "^8.0.3",
     "jest": "^29.5.0",
     "jest-canvas-mock": "^2.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "lint-staged": "^13.2.2",
-    "mocha": "^10.2.0",
-    "nyc": "^15.1.0",
     "prettier": "^2.8.8",
     "standard-version": "^9.5.0",
     "ts-jest": "^29.1.0",
@@ -53,5 +52,10 @@
     "LICENSE",
     "README.md"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "standard-version": {
+    "scripts": {
+      "prerelease": "npm run lint && npm run test:coverage"
+    }
+  }
 }
