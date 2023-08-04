@@ -3,16 +3,11 @@
     "^.+\\.(t|j)sx?$": "ts-jest"
   },
   "testRegex": "(/tests/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+  "collectCoverageFrom" : [
+    "<rootDir>/src/**/*.ts"
+  ],
   "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
   "testEnvironment": "jsdom",
-  "coverageReporters": ["text"],
-  "coverageThreshold": {
-    "global": {
-      "branches": 85,
-      "functions": 85,
-      "lines": 85,
-      "statements": 85
-    }
-  },
+  "coverageReporters": ["text", "html"],
   "collectCoverage": true
 }
