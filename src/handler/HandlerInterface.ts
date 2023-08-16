@@ -1,4 +1,12 @@
 import { Serializable } from '../types/Serializable';
+import { AbstractEntity } from '../entity/AbstractEntity';
+import { ClassConstructor } from 'class-transformer';
+
+export type HandleRequestProps<EntityType extends AbstractEntity> = {
+    id?: string | number,
+    urlBuilder?: (entity: ClassConstructor<EntityType>, id?: string | number) => string;
+    options?: { [key: string]: any }
+};
 
 export interface HandlerInterface {
     /**
@@ -27,4 +35,13 @@ export interface HandlerInterface {
         CreateDataType extends Serializable,
         ReturnDataType extends Serializable
     >(id: string, data: Partial<CreateDataType>, options?: { [k: string]: any }): Promise<ReturnDataType>;
+
+    handleRequest<
+        EntityType extends AbstractEntity,
+        ReturnData,
+    >({
+          id,
+          urlBuilder,
+          options,
+      }: HandleRequestProps<EntityType>): Promise<ReturnData>;
 }

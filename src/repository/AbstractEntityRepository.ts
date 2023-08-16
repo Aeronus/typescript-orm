@@ -1,15 +1,15 @@
-import { plainToInstance } from 'class-transformer';
+import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { validateSync } from 'class-validator';
 import { AbstractEntity } from '../entity/AbstractEntity';
 import { EntityValidationError } from '../error/EntityValidationError';
-import { HandlerInterface } from '../handler/HandlerInterface';
+import { HandleRequestProps, HandlerInterface } from '../handler/HandlerInterface';
 import { Serializable } from '../types/Serializable';
 
 export class AbstractEntityRepository<EntityType extends AbstractEntity> {
-    private readonly entityType: { new(): EntityType };
+    private readonly entityType: ClassConstructor<EntityType>;
     protected readonly handler: HandlerInterface;
 
-    constructor(entityType: { new(): EntityType }, handler: HandlerInterface) {
+    constructor(entityType: ClassConstructor<EntityType>, handler: HandlerInterface) {
         this.entityType = entityType;
         this.handler = handler;
 
@@ -45,7 +45,7 @@ export class AbstractEntityRepository<EntityType extends AbstractEntity> {
         return this.createEntityFromData(this.handler.put(id, data, handlerOptions));
     }
 
-    protected deleteEntity(id: string, handlerOptions?: { [k: string]: any }): boolean {
+    protected deleteEntity(id: string, handlerOptions?: { [k: string]: any }): Promise<boolean> {
         return this.handler.delete(id, handlerOptions);
     }
 
@@ -53,5 +53,16 @@ export class AbstractEntityRepository<EntityType extends AbstractEntity> {
         SerializableEntityType extends Serializable
     >(id: string, data: Partial<SerializableEntityType>, handlerOptions?: { [k: string]: any }): EntityType {
         return this.createEntityFromData(this.handler.patch(id, data, handlerOptions));
+    }
+
+    protected handleRequest<
+        EntityType extends AbstractEntity,
+        ReturnData,
+    >({
+          id,
+          urlBuilder,
+          options,
+      }: HandleRequestProps<EntityType>) {
+        return this.handler.handleRequest<EntityType, ReturnData>({ id, urlBuilder, options });
     }
 }
