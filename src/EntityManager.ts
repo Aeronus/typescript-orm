@@ -13,10 +13,10 @@ class EntityManagerClass {
         this._entityHandler = handler;
     }
 
-    public getRepository<EntityType extends EntityInterface>(
+    public getRepository<EntityType extends EntityInterface, RepositoryType extends EntityRepository<EntityType>>(
         entityType: ClassConstructor<EntityType>,
-    ): EntityRepository<EntityType> {
-        const repository = entityMetadataStore.getRepository<EntityType>(entityType);
+    ): RepositoryType {
+        const repository = entityMetadataStore.getRepository<EntityType, RepositoryType>(entityType);
 
         if (repository == null) {
             throw new Error(`No repository was found for entity ${entityType.name}`);
@@ -28,20 +28,18 @@ class EntityManagerClass {
     public async handleRequest<ReturnType>(
         options: HandleRequestProps,
         typeConstructor: ClassConstructor<ReturnType>,
-        convertOptions: ClassTransformOptions = {
-            excludeExtraneousValues: true,
-        },
+        convertOptions: ClassTransformOptions = {},
     ): Promise<ReturnType | null> {
-        let returnValue = await this.handleRawRequest(options);
+        const returnValue = await this.handleRawRequest(options);
 
         if (returnValue === null) {
             return null;
         }
 
         // handle response from fetch
-        if (returnValue instanceof Response) {
-            returnValue = await returnValue.json();
-        }
+        // if (Object.keys(returnValue).includes('json') && typeof returnValue.json == 'function') {
+        //     returnValue = await returnValue.json();
+        // }
 
         return plainToInstance(typeConstructor, returnValue, convertOptions);
     }
