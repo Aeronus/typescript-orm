@@ -1,11 +1,11 @@
 import { Entity } from '../../src/decorator/EntityDecorator';
-import { TestEntityRepository } from '../repository/TestEntityRepository';
 import { EntityInterface } from '../../src/entity/EntityInterface';
 import { Type } from 'class-transformer';
 import 'reflect-metadata';
+import { TestEntityFourRepository } from '../repository/TestEntityFourRepository';
 
-@Entity({ repositoryClass: TestEntityRepository, baseUri: '/test/api/testEntity' })
-export class TestEntity implements EntityInterface {
+@Entity({ repositoryClass: TestEntityFourRepository, baseUri: '/test/api/testEntityFour' })
+export class TestEntityFour implements EntityInterface {
     public name: string;
 
     public age: number;

@@ -14,5 +14,6 @@
       "statements": 85
     }
   },
-  "collectCoverage": true
+  "collectCoverage": true,
+  "coveragePathIgnorePatterns": ["(/testData/*)"]
 }

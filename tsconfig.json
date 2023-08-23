@@ -6,7 +6,7 @@
         "declaration": true,
         "sourceMap": true,
         "outDir": "./dist/esm",
-        "strict": true,
+        "strict": false,
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "noUnusedLocals": true,
@@ -16,7 +16,9 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "experimentalDecorators": false
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "strictPropertyInitialization": false
     },
     "include": ["src"],
     "exclude": ["node_modules", "**/__tests__/*", "dist", "testData"]
