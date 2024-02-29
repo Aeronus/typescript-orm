@@ -14,20 +14,22 @@ class EntityMetadataStore {
     private entityMetadata: { [entityName: string]: EntityMetadata<EntityInterface> } = {};
 
     /**
-     * Sets the repository for an entity
+     * Add a new entity and it's metadata
+     *
      * @template EntityType Type of the entity
-     * @param {ClassConstructor<EntityType>} entity Entity class
-     * @param {ClassConstructor<EntityRepository<EntityType>>} repository Repository class
+     * @param {ClassConstructor<EntityType>} entity entity class
+     * @param {EntityMetadata<EntityType>} metaData entity metadata
      */
-    public setRepository<EntityType extends EntityInterface>(
+    public addEntity<EntityType extends EntityInterface>(
         entity: ClassConstructor<EntityType>,
-        repository: ClassConstructor<EntityRepository<EntityType>>,
+        metaData: EntityMetadata<EntityType>,
     ) {
-        this.getEntityMetadata(entity).repositoryClass = repository;
+        this.setEntityMetadata(entity, metaData);
     }
 
     /**
      * Returns an instance of the repository for an entity
+     *
      * @template EntityType Type of the entity
      * @param {ClassConstructor<EntityType>} entity Entity class
      * @returns {EntityRepository<EntityType> | null} Repository instance if one is declared otherwise null
@@ -49,17 +51,8 @@ class EntityMetadataStore {
     }
 
     /**
-     * Sets the base uri for an entity
-     * @template EntityType Type of the entity
-     * @param {ClassConstructor<EntityType>} entity Entity class
-     * @param {string} uri Base uri for the entity
-     */
-    public setBaseUri<EntityType extends EntityInterface>(entity: ClassConstructor<EntityType>, uri: string) {
-        this.getEntityMetadata(entity).baseUri = uri;
-    }
-
-    /**
      * Returns the base uri declared for the entity
+     *
      * @template EntityType Type of the entity
      * @param {ClassConstructor<EntityType>} entity Entity class
      * @returns {string | null} Base uri if one was stored otherwise null
@@ -70,6 +63,7 @@ class EntityMetadataStore {
 
     /**
      * Returns the metadata for an entity
+     *
      * @template EntityType Type of the entity
      * @param {ClassConstructor<EntityType>} entity Entity class
      * @returns {EntityMetadata<EntityInterface>} Metadata object stored in the store
@@ -86,6 +80,23 @@ class EntityMetadataStore {
         }
 
         return this.entityMetadata[uuid];
+    }
+
+    /**
+     * Set the metadata for an entity
+     *
+     * @template EntityType Type of the entity
+     * @param {ClassConstructor<EntityType>} entity entity class
+     * @param {EntityMetadata<EntityType>} metadata entity metadata
+     * @private
+     */
+    private setEntityMetadata<EntityType extends EntityInterface>(
+        entity: ClassConstructor<EntityType>,
+        metadata: EntityMetadata<EntityType>,
+    ) {
+        const entityName = entity.name;
+        const uuid = uuidv5(entityName, META_DATASTORE_WORKSPACE);
+        this.entityMetadata[uuid] = metadata;
     }
 }
 

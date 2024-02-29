@@ -4,6 +4,7 @@ export type HandleRequestProps = {
     uri: string;
     method: HttpMethod;
     options?: { [option: string]: any };
+    data?: any;
 };
 
 export interface HandlerInterface {

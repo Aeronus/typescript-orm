@@ -3,11 +3,13 @@ import { EntityInterface } from '../../src/entity/EntityInterface';
 import { Type } from 'class-transformer';
 import 'reflect-metadata';
 import { TestEntityFourRepository } from '../repository/TestEntityFourRepository';
+import { IsNumber } from 'class-validator';
 
 @Entity({ repositoryClass: TestEntityFourRepository, baseUri: '/test/api/testEntityFour' })
 export class TestEntityFour implements EntityInterface {
     public name: string;
 
+    @IsNumber()
     public age: number;
 
     @Type(() => Date)
