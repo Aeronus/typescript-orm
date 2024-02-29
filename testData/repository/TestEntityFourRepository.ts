@@ -5,6 +5,6 @@ export class TestEntityFourRepository extends EntityRepository<TestEntityFour> {
     public get(id: string | number) {
         const uri = this.getUriFromEntity(id);
 
-        return this.handleRequest<TestEntityFour>({ uri, method: 'GET' }, TestEntityFour);
+        return this.handleRequest<TestEntityFour>({ options: { uri, method: 'GET' }, typeConstructor: TestEntityFour });
     }
 }

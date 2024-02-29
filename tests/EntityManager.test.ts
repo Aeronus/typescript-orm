@@ -31,6 +31,19 @@ describe('EntityManager', () => {
         expect(entity?.name).toBe('Max Mustermann');
         expect(entity?.age).toBe(24);
     });
+    it('repository handle collection request with custom handler', async () => {
+        EntityManager.setEntityHandler(new JsonTestHandler());
+        const repo: TestEntityRepository = EntityManager.getRepository(TestEntity);
+        const entityCollection = await repo.getCollection();
+
+        expect(Array.isArray(entityCollection)).toBeTruthy();
+        expect(entityCollection.length).toBe(1);
+
+        expect(entityCollection[0]).toBeInstanceOf(TestEntity);
+        expect(entityCollection[0]?.birthDay).toBeInstanceOf(Date);
+        expect(entityCollection[0]?.name).toBe('Max Mustermann');
+        expect(entityCollection[0]?.age).toBe(24);
+    });
     it('repository handle request with custom handler and slash at the end of uri', async () => {
         EntityManager.setEntityHandler(new JsonTestHandler());
         const repo: TestEntityRepository = EntityManager.getRepository(TestEntity);
@@ -54,6 +67,13 @@ describe('EntityManager', () => {
         const entity = await repo.get(0);
 
         expect(entity).toBeNull();
+    });
+    it('repository handle collection request with custom handler and unknown entity', async () => {
+        EntityManager.setEntityHandler(new JsonTestHandler());
+        const repo: TestEntityTwoRepository = EntityManager.getRepository(TestEntityTwo);
+        const entityCollection = await repo.getCollection();
+
+        expect(entityCollection).toBeNull();
     });
     it('repository handle request with custom handler and nested entity', async () => {
         EntityManager.setEntityHandler(new JsonTestHandler());
