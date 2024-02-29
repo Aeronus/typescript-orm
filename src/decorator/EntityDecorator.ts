@@ -13,7 +13,6 @@ export function Entity<EntityType extends EntityInterface, RepositoryType extend
     baseUri,
 }: EntityDecoratorParams<EntityType, RepositoryType>) {
     return function (constructor: ClassConstructor<EntityType>) {
-        entityMetadataStore.setRepository(constructor, repositoryClass);
-        entityMetadataStore.setBaseUri(constructor, baseUri);
+        entityMetadataStore.addEntity(constructor, { repositoryClass, baseUri });
     };
 }
